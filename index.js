@@ -1,20 +1,25 @@
-const chronium = require("chrome-aws-lambda");
 const puppeteer = require("puppeteer");
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const Iterator = require("./Iterator");
 
-const botToken = process.env.CHAIN_SCRAPER_BOT_API;
-const bot = new TelegramBot(botToken, {polling: true});
 
 
 
-exports.handler = async (event) => {
+module.exports = async function (context, req) {
 
+    const botToken = process.env.CHAIN_SCRAPER_BOT_API;
+    const bot = new TelegramBot(botToken);
+    const chatId = process.env.CHAT_ID;
     const myIterator = new Iterator();
+
+
+
     try{
 
-        const browser = await puppeteer.launch({headless: false});
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+        });
         const page = await browser.newPage();
         await page.goto("https://nodes.guru/testnets", {waitUntil:"networkidle0"});
         await page.waitForSelector('nav');
@@ -23,6 +28,7 @@ exports.handler = async (event) => {
         await page.waitForSelector('.more__btn a');
         await page.click('.more__btn a');
         await page.waitForTimeout(3000);
+        await page.click('.more__btn a');
 
         const blockChainNames = await page.evaluate(() => {
             const cards = Array.from(document.querySelectorAll("a.jsx-3889733663.cards__container-card"));
@@ -35,13 +41,28 @@ exports.handler = async (event) => {
             if(added){
                 console.log(`${name} was added to the Json File`);
                 await page.goto(`https://nodes.guru/testnets/${name.toLowerCase()}`, {waitUntil:"networkidle0"});
+                const twitterLink = await page.evaluate(()=> {
+                    const twitterAnchor = document.querySelector('a[href*="twitter.com"]');
+                    return twitterAnchor ? twitterAnchor.href : null;
+                });
+                if(twitterLink){
+                    await bot.sendMessage(chatId, `New testnet added: ${name}\nTwitter: ${twitterLink}`);
+                }
             }else{
                 console.log(`${name} already exists in the Json File`)
             }
           }
-    }catch{
-        console.error("Error occured:", error);
-    }
-}
+          await page.waitForTimeout(3000);
+          await browser.close()
 
-exports.handler({}).then(result => console.log(result)).catch(error => console.error(error));
+          AudioContext.res = {
+            body: "Process completed successfully."
+          };
+    }catch(error){
+        console.error("Error occured:", error);
+        context.res = {
+            status: 500,
+            body: "An error occurred during the process."
+        };
+    }
+};
