@@ -18,9 +18,7 @@ const nodesGuruScraper = async function () {
 
     try{
 
-        const browser = await puppeteer.launch({
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] 
-        });
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto("https://nodes.guru/testnets", {waitUntil:"networkidle0"});
         await page.waitForSelector('nav');
