@@ -2,6 +2,7 @@ const puppeteer = require("puppeteer");
 require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 const Iterator = require("./Iterator");
+const fs = require('fs');
 
 
 
