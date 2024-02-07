@@ -6,7 +6,7 @@ const Iterator = require("./Iterator");
 
 
 
-module.exports = async function (context, req) {
+const nodesGuruScraper = async function () {
 
     const botToken = process.env.CHAIN_SCRAPER_BOT_API;
     const bot = new TelegramBot(botToken);
@@ -55,14 +55,11 @@ module.exports = async function (context, req) {
           await page.waitForTimeout(3000);
           await browser.close()
 
-          AudioContext.res = {
-            body: "Process completed successfully."
-          };
+
     }catch(error){
         console.error("Error occured:", error);
-        context.res = {
-            status: 500,
-            body: "An error occurred during the process."
-        };
+        fs.appendFileSync('error.log', `${new Date().toISOString()} - Error occurred: ${error}\n`);
     }
 };
+
+nodesGuruScraper();
