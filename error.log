@@ -1,1 +1,3 @@
-2024-02-07T10:56:05.916Z - Error occurred: Error: EFATAL: Telegram Bot Token not provided!
+
+
+2024-02-10T14:12:16.026Z - Error occurred: TypeError [ERR_INVALID_ARG_TYPE]: The "callback" argument must be of type function. Received type number (1000)
