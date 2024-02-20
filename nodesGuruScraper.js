@@ -14,7 +14,7 @@ class NodesGuruScraper {
         const myIterator = new Iterator();
         try{
             const browser = await puppeteer.launch({
-                //executablePath: '/usr/bin/google-chrome',
+                executablePath: '/usr/bin/google-chrome',
                 args: ['--no-sandbox', '--disable-setuid-sandbox'] 
             });
             const page = await browser.newPage();

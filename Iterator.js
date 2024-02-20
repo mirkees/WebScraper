@@ -28,44 +28,6 @@ class Iterator{
     }
 }
 
-const NodesGuruChains =  [
-    'Gevulot',  'Ethos',    'Settlus',
-    'Vistara',  'Initia',   'Swisstronik',
-    'Rooch',    'Omni',     'Eclipse',
-    'Astria',   'Odsy',     'Linera',
-    'Aztec',    'Dflow',    'Nillion',
-    'Kima',     'Side One', 'Monad',
-    'Redstone', 'Ten',      'Bundlr',
-    'Web3Auth', 'GNO Land', 'Gensyn',
-    'Entropy',  'Espresso', 'Laconic'
-  ];
-
- const rootDataChains =  [
-    'LAMBDA',           'Nockchain',
-    'ALLO',             'Autonity',
-    'BOINC AI',         'ElosysELO',
-    'EtherealETRL',     'PowBlocksXPB',
-    'Pyrin',            'VinuChainVC',
-    'EtraPay',          'KekChainKEK',
-    'Ottochain',        'PWR Chain',
-    'Aether',           'LiquidLayerLILA',
-    'UPCXUPC',          'Engram Network',
-    'Nomic',            'Erbie',
-    'Inco Network',     'ArtheraAA',
-    'Fhenix',           'Evadore',
-    'HeliChain',        'WhiteBIT Network',
-    'Sanpō Blockchain', 'Gevulot',
-    'Movement Labs',    'QED Protocol'
-  ];
-
- /*async function test (chains) {
-     const i = new Iterator();
-     for( c of chains){
-       await i.iterate(c);
-     }
-  }
-
-  test();*/
 
 
 
